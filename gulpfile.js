@@ -5,6 +5,7 @@ const concat		= require('gulp-concat');
 
 
 // File psths
+let DIST_PATH	= 'public/dist';
 let SCRITS_PATH = 'public/scripts/**/*.js';
 let STYLES_PATH = 'public/css/**/*.css';
 let HTMLS_PATH	= 'public/*.html';
@@ -13,7 +14,7 @@ let HTMLS_PATH	= 'public/*.html';
 gulp.task('styles', () => {
 	gulp.src(STYLES_PATH)
 		.pipe(concat('styles.css'))
-		.pipe(gulp.dest('public/dist'))
+		.pipe(gulp.dest(DIST_PATH))
 		.pipe(livereload());
 });
 
@@ -21,7 +22,7 @@ gulp.task('styles', () => {
 gulp.task('copyHtml', () => {
 	console.log('Copying HTML files...');
 	gulp.src(HTMLS_PATH)
-	.pipe(gulp.dest('public/dist'));
+	.pipe(gulp.dest(DIST_PATH));
 });
 
 // Scripts
@@ -30,7 +31,7 @@ gulp.task('scripts', () => {
 	gulp.src('public/scripts/*.js')
 		.pipe(concat('all.js'))
 		.pipe(uglify())
-		.pipe(gulp.dest('public/dist'))
+		.pipe(gulp.dest(DIST_PATH))
 		.pipe(livereload());
 });
 

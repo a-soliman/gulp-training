@@ -14,7 +14,7 @@ let HTMLS_PATH	= 'public/*.html';
 gulp.task('styles', () => {
 	gulp.src(STYLES_PATH)
 		.pipe(concat('styles.css'))
-		.pipe(gulp.dest(DIST_PATH))
+		.pipe(gulp.dest(['public/css/reset.css', STYLES_PATH]))
 		.pipe(livereload());
 });
 

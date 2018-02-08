@@ -11,7 +11,10 @@ let HTMLS_PATH	= 'public/*.html';
 
 // Styles
 gulp.task('styles', () => {
-	console.log('Starting styles task');
+	gulp.src(STYLES_PATH)
+		.pipe(concat('styles.css'))
+		.pipe(gulp.dest('public/dist'))
+		.pipe(livereload());
 });
 
 // Copy HTML to dist
@@ -36,6 +39,7 @@ gulp.task('watch', () => {
 
 	require('./server.js');
 	livereload.listen();
+	gulp.watch(STYLES_PATH, ['styles']);
 	gulp.watch(HTMLS_PATH, ['copyHtml']);
 	gulp.watch(SCRITS_PATH, ['scripts']);
 });

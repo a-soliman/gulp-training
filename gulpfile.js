@@ -1,5 +1,6 @@
 const gulp		= require('gulp');
 const uglify 	= require('gulp-uglify-es').default;
+const livereload 	= require('gulp-livereload');
 
 // File psths
 let SCRITS_PATH = 'public/scripts/**/*.js';
@@ -23,13 +24,15 @@ gulp.task('scripts', () => {
 	console.log('Starting Scripts task');
 	gulp.src('public/scripts/*.js')
 		.pipe(uglify())
-		.pipe(gulp.dest('public/dist'));
+		.pipe(gulp.dest('public/dist'))
+		.pipe(livereload());
 });
 
 gulp.task('watch', () => {
 	console.log('Watch task started');
 
 	require('./server.js');
+	livereload.listen();
 	gulp.watch(HTMLS_PATH, ['copyHtml']);
 	gulp.watch(SCRITS_PATH, ['scripts']);
 });

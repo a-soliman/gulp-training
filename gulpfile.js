@@ -1,6 +1,8 @@
-const gulp		= require('gulp');
-const uglify 	= require('gulp-uglify-es').default;
+const gulp			= require('gulp');
+const uglify 		= require('gulp-uglify-es').default;
 const livereload 	= require('gulp-livereload');
+const concat		= require('gulp-concat');
+
 
 // File psths
 let SCRITS_PATH = 'public/scripts/**/*.js';
@@ -23,6 +25,7 @@ gulp.task('copyHtml', () => {
 gulp.task('scripts', () => {
 	console.log('Starting Scripts task');
 	gulp.src('public/scripts/*.js')
+		.pipe(concat('all.js'))
 		.pipe(uglify())
 		.pipe(gulp.dest('public/dist'))
 		.pipe(livereload());

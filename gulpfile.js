@@ -12,9 +12,9 @@ let HTMLS_PATH	= 'public/*.html';
 
 // Styles
 gulp.task('styles', () => {
-	gulp.src(STYLES_PATH)
+	gulp.src(['public/css/reset.css', STYLES_PATH])
 		.pipe(concat('styles.css'))
-		.pipe(gulp.dest())
+		.pipe(gulp.dest(DIST_PATH))
 		.pipe(livereload());
 });
 

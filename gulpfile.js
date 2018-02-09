@@ -5,6 +5,7 @@ const concat		= require('gulp-concat');
 const minifyCss		= require('gulp-minify-css');
 const autoprefixer	= require('gulp-autoprefixer');
 const plumber		= require('gulp-plumber');
+const sourcemaps 	= require('gulp-sourcemaps');
 
 
 // File psths
@@ -20,9 +21,11 @@ gulp.task('styles', () => {
 			console.log('Styles task error');
 			console.log(err);
 		}))
+		.pipe(sourcemaps.init())
 		.pipe(autoprefixer())
 		.pipe(concat('styles.css'))
 		.pipe(minifyCss())
+		.pipe(sourcemaps.write())
 		.pipe(gulp.dest(DIST_PATH))
 		.pipe(livereload());
 });

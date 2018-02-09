@@ -7,6 +7,7 @@ const autoprefixer	= require('gulp-autoprefixer');
 const plumber		= require('gulp-plumber');
 const sourcemaps 	= require('gulp-sourcemaps');
 const sass 			= require('gulp-sass');
+const babel			= require('gulp-babel');
 
 
 // File psths
@@ -65,6 +66,9 @@ gulp.task('scripts', () => {
 			console.log(err);
 		}))
 		.pipe(sourcemaps.init())
+		.pipe(babel({
+			presets: ['es2015']
+		}))
 		.pipe(concat('scripts.js'))
 		.pipe(uglify())
 		.pipe(sourcemaps.write())

@@ -59,9 +59,15 @@ gulp.task('copyHtml', () => {
 // Scripts
 gulp.task('scripts', () => {
 	console.log('Starting Scripts task');
-	gulp.src('public/scripts/*.js')
-		.pipe(concat('all.js'))
+	gulp.src(SCRITS_PATH)
+		.pipe(plumber((err) => {
+			console.log('Scripts task error');
+			console.log(err);
+		}))
+		.pipe(sourcemaps.init())
+		.pipe(concat('scripts.js'))
 		.pipe(uglify())
+		.pipe(sourcemaps.write())
 		.pipe(gulp.dest(DIST_PATH))
 		.pipe(livereload());
 });
@@ -76,3 +82,5 @@ gulp.task('watch', () => {
 	gulp.watch(HTMLS_PATH, ['copyHtml']);
 	gulp.watch(SCRITS_PATH, ['scripts']);
 });
+
+gulp.task('build', ['copyHtml', 'scripts', 'sass']);

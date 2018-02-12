@@ -9,6 +9,12 @@ const sourcemaps 	= require('gulp-sourcemaps');
 const sass 			= require('gulp-sass');
 const babel			= require('gulp-babel');
 
+// handlebars
+const handlebars 	= require('gulp-handlebars');
+const handlebarsLib	= require('handlebars');
+const declare		= require('gulp-declare');
+const wrap			= require('gulp-wrap');
+
 
 // File psths
 let DIST_PATH	= 'public/dist';

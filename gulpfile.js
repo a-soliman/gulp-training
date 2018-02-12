@@ -17,11 +17,12 @@ const wrap			= require('gulp-wrap');
 
 
 // File psths
-let DIST_PATH	= 'public/dist';
-let SCRITS_PATH = 'public/scripts/**/*.js';
-let STYLES_PATH = 'public/css/**/*.css';
-let HTMLS_PATH	= 'public/*.html';
-let SASS_PATH	= 'public/sass/**/*.scss';
+let DIST_PATH		= 'public/dist';
+let SCRITS_PATH 	= 'public/scripts/**/*.js';
+let STYLES_PATH 	= 'public/css/**/*.css';
+let HTMLS_PATH		= 'public/*.html';
+let SASS_PATH		= 'public/sass/**/*.scss';
+let TEMPLATES_PATH	= 'templates/**/*.hbs';
 
 // // Styles
 // gulp.task('styles', () => {
@@ -82,7 +83,27 @@ gulp.task('scripts', () => {
 		.pipe(livereload());
 });
 
-gulp.task('watch', () => {
+// handlebars
+gulp.task('templates', () => {
+	return gulp.src(TEMPLATES_PATH)
+		.pipe(handlebars({
+			handlebars: handlebarsLib
+		}))
+		.pipe(wrap('Handlebars.template(<%= contents %>)'))
+		.pipe(declare({
+			namespace: 'templates',
+			noRedeclare: true
+		}))
+		.pipe(concat('template.js'))
+		.pipe(gulp.dest(DIST_PATH))
+		.pipe(livereload());
+});
+
+gulp.task('default', ['sass', 'copyHtml', 'scripts'], () => {
+
+});
+
+gulp.task('watch', ['default'], () => {
 	console.log('Watch task started');
 
 	require('./server.js');
@@ -91,6 +112,7 @@ gulp.task('watch', () => {
 	gulp.watch(STYLES_PATH, ['styles']);
 	gulp.watch(HTMLS_PATH, ['copyHtml']);
 	gulp.watch(SCRITS_PATH, ['scripts']);
+	gulp.watch(TEMPLATES_PATH, ['templates']);
 });
 
 gulp.task('build', ['copyHtml', 'scripts', 'sass']);

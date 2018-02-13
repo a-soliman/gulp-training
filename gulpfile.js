@@ -33,7 +33,16 @@ let IMAGES_PATH		= 'public/images/**/*.{png,jpg,jpeg,svg,gif}'
 // IMAGES
 gulp.task('images', () => {
 	return gulp.src(IMAGES_PATH)
-		.pipe(imagemin())
+		.pipe(imagemin(
+			[
+				imagemin.gifsicle(),
+				imagemin.jpegtran(),
+				imagemin.optipng(),
+				imagemin.svgo(),
+				imageminPngquant(),
+				imageminJpegRecompress()
+			]
+		))
 		.pipe(gulp.dest(DIST_PATH + '/images'))
 });
 // // Styles

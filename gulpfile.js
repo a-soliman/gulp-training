@@ -8,6 +8,8 @@ const plumber		= require('gulp-plumber');
 const sourcemaps 	= require('gulp-sourcemaps');
 const sass 			= require('gulp-sass');
 const babel			= require('gulp-babel');
+const del 			= require('del');
+const zip 			= require('gulp-zip');
 
 // handlebars
 const handlebars 	= require('gulp-handlebars');
@@ -29,6 +31,14 @@ let HTMLS_PATH		= 'public/*.html';
 let SASS_PATH		= 'public/sass/**/*.scss';
 let TEMPLATES_PATH	= 'templates/**/*.hbs';
 let IMAGES_PATH		= 'public/images/**/*.{png,jpg,jpeg,svg,gif}'
+
+
+// CLEAN
+gulp.task('clean', () => {
+	return del.sync([
+			DIST_PATH
+		]);
+});
 
 // IMAGES
 gulp.task('images', () => {
@@ -120,8 +130,14 @@ gulp.task('templates', () => {
 		.pipe(livereload());
 });
 
-gulp.task('default', ['images', 'sass', 'copyHtml', 'scripts'], () => {
+gulp.task('default', ['clean', 'images', 'sass', 'copyHtml', 'scripts'], () => {
 
+});
+
+gulp.task('export', () => {
+	return gulp.src('public/**/*')
+		.pipe(zip('website.zip'))
+		.pipe(gulp.dest('./'))
 });
 
 gulp.task('watch', ['default'], () => {

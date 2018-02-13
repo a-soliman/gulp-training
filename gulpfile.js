@@ -15,6 +15,11 @@ const handlebarsLib	= require('handlebars');
 const declare		= require('gulp-declare');
 const wrap			= require('gulp-wrap');
 
+// Image compresssion
+const imagemin					= require('gulp-imagemin');
+const imageminPngquant			= require('imagemin-pngquant');
+const imageminJpegRecompress	= require('imagemin-jpeg-recompress');
+
 
 // File psths
 let DIST_PATH		= 'public/dist';
@@ -23,7 +28,14 @@ let STYLES_PATH 	= 'public/css/**/*.css';
 let HTMLS_PATH		= 'public/*.html';
 let SASS_PATH		= 'public/sass/**/*.scss';
 let TEMPLATES_PATH	= 'templates/**/*.hbs';
+let IMAGES_PATH		= 'public/images/**/*.{png,jpg,jpeg,svg,gif}'
 
+// IMAGES
+gulp.task('images', () => {
+	return gulp.src(IMAGES_PATH)
+		.pipe(imagemin())
+		.pipe(gulp.dest(DIST_PATH + '/images'))
+});
 // // Styles
 // gulp.task('styles', () => {
 // 	gulp.src(['public/css/reset.css', STYLES_PATH])
@@ -99,7 +111,7 @@ gulp.task('templates', () => {
 		.pipe(livereload());
 });
 
-gulp.task('default', ['sass', 'copyHtml', 'scripts'], () => {
+gulp.task('default', ['images', 'sass', 'copyHtml', 'scripts'], () => {
 
 });
 
